@@ -7,9 +7,14 @@ pry = require('pryjs')
 router.get("/", function(req, res) {
   Food.findAll()
     .then(foods => {
-      eval(pry.it)
-      res.setHeader("Content-Type", "application/json");
-      res.status(200).send(JSON.stringify(foods));
+      if (foods.length > 0) {
+        res.setHeader("Content-Type", "application/json");
+        res.status(200).send(JSON.stringify(foods));
+      }
+      else {
+        res.setHeader("Content-Type", "application/json");
+        res.status(404).send(JSON.stringify({ message: 'No food in database'}));
+      }
     })
     .catch(error => {
       res.setHeader("Content-Type", "application/json");
