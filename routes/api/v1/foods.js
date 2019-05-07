@@ -56,7 +56,7 @@ router.delete("/:id", function(req, res) {
     }
   })
   .then(food => {
-    if (food == 0) {
+    if (food === 0) {
       res.setHeader("Content-Type", "application/json");
       res.status(404).send(JSON.stringify({ message: 'Food does not exist in database'}));
     }
