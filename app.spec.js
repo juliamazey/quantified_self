@@ -1,6 +1,7 @@
 var shell = require('shelljs');
 var request = require('supertest');
 var app = require('./app');
+const patchBody = { "name": "updated_name", "calories": 100 }
 
 describe('api', () => {
   beforeEach(() => {
@@ -62,9 +63,49 @@ describe('api', () => {
       });
     });
 
-    test('should return a 404 if the food does not exist in DB', () => {
+    test('should return a 404 if the food does not exist in the DB', () => {
       return request(app).delete('/api/v1/foods/100').then(response => {
         expect(response.status).toBe(404)
+      });
+    });
+  });
+
+  describe('Test PATCH /api/v1/foods/:id path', () => {
+    test('should return a 200 status', () => {
+      return request(app).patch('/api/v1/foods/1').send(patchBody).then(response => {
+        expect(response.status).toBe(200);
+      });
+    });
+
+    test('should return the updated food', () => {
+      return request(app).patch('/api/v1/foods/1').send(patchBody).then(response => {
+        expect(response.body.name).toBe('updated_name'),
+        expect(response.body.calories).toBe(100),
+        expect((response.body.id)).toBe(1);
+      });
+    });
+
+    test('should return a 404 if the food does not exist in the DB', () => {
+      return request(app).patch('/api/v1/foods/100').send(patchBody).then(response => {
+        expect(response.status).toBe(404);
+      });
+    });
+
+    test('should return a 400 if the request is missing calories parameter', () => {
+      return request(app).patch('/api/v1/foods/100').send({"name": "updated_name"}).then(response => {
+        expect(response.status).toBe(400);
+      });
+    });
+
+    test('should return a 400 if the request is missing calories parameter', () => {
+      return request(app).patch('/api/v1/foods/100').send({"name": "updated_name"}).then(response => {
+        expect(response.status).toBe(400);
+      });
+    });
+
+    test('should return a 400 if the request is missing name parameter', () => {
+      return request(app).patch('/api/v1/foods/100').send({"calories": 100}).then(response => {
+        expect(response.status).toBe(400);
       });
     });
   });
