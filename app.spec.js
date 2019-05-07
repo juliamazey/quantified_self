@@ -97,12 +97,6 @@ describe('api', () => {
       });
     });
 
-    test('should return a 400 if the request is missing calories parameter', () => {
-      return request(app).patch('/api/v1/foods/100').send({"name": "updated_name"}).then(response => {
-        expect(response.status).toBe(400);
-      });
-    });
-
     test('should return a 400 if the request is missing name parameter', () => {
       return request(app).patch('/api/v1/foods/100').send({"calories": 100}).then(response => {
         expect(response.status).toBe(400);
