@@ -92,4 +92,36 @@ router.post('/', function(req, res) {
   }
 });
 
+// PATCH food by id
+	router.patch("/:id", function(req, res) {
+	  if (req.body.name && req.body.calories){
+	    Food.update(
+	      { name: req.body.name, calories: req.body.calories },
+	      {
+	        where: { id: req.params.id },
+	        returning: true
+	      }
+	    )
+	    .then(food => {
+	      if (food[0] === 0) {
+	        res.setHeader("Content-Type", "application/json");
+	        res.status(404).send(JSON.stringify({ message: 'Food does not exist in database'}));
+	      }
+	      else {
+	        var updated_food = food[1][0]
+	        res.setHeader("Content-Type", "application/json");
+	        res.status(200).send(updated_food);
+	      }
+	    })
+	    .catch(error => {
+	      res.setHeader("Content-Type", "application/json");
+	      res.status(400).send({ error })
+	    });
+	  }
+	  else {
+	    res.setHeader("Content-Type", "application/json");
+	    res.status(400).send(JSON.stringify({ message: 'Food name and calories parameters required'}))
+	  }
+	});
+
 module.exports = router;
