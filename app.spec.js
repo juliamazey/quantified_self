@@ -4,8 +4,8 @@ var app = require('./app');
 
 describe('api', () => {
   beforeEach(() => {
-    shell.exec('npx sequelize db:migrate:undo:all');
     shell.exec('npx sequelize db:create');
+    shell.exec('npx sequelize db:migrate:undo:all');
     shell.exec('npx sequelize db:migrate');
     shell.exec('npx sequelize db:seed:all');
   });
@@ -24,7 +24,14 @@ describe('api', () => {
         expect(Object.keys(response.body[0])).toContain('calories')
       });
     });
-  })
+
+    test('should return a 404 if there are no foods in DB', () => {
+      shell.exec('npx sequelize db:seed:undo:all');
+      return request(app).get('/api/v1/foods').then(response => {
+        expect(response.status).toBe(404)
+      });
+    });
+  });
 
   describe('Test /api/v1/foods/:id path', () => {
     test('should return a 200 status', () => {
@@ -40,5 +47,11 @@ describe('api', () => {
         expect((response.body.id)).toBe(1)
       });
     });
-  })
+
+    test('should return a 404 if the food does not exist in DB', () => {
+      return request(app).get('/api/v1/foods/100').then(response => {
+        expect(response.status).toBe(404)
+      });
+    });
+  });
 });
