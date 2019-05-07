@@ -56,7 +56,7 @@ describe('api', () => {
   });
 
   describe('Test DELETE /api/v1/foods/:id path', () => {
-    test('should return a 200 status', () => {
+    test('should return a 204 status', () => {
       return request(app).delete('/api/v1/foods/1').then(response => {
         expect(response.status).toBe(204);
       });
