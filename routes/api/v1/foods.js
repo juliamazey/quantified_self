@@ -71,4 +71,25 @@ router.delete("/:id", function(req, res) {
   });
 });
 
+// POST food
+router.post('/', function(req, res) {
+  if (req.body.name && req.body.calories)
+    {Food.create( {
+      name: req.body.name,
+      calories: req.body.calories
+    })
+    .then(food => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(201).send(JSON.stringify(food));
+    })
+    .catch(error => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(400).send({ error })
+    });}
+  else {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify("You need to specify name and calories"))
+  }
+});
+
 module.exports = router;
