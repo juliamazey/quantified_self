@@ -78,7 +78,7 @@ describe('api', () => {
       });
     });
     test('should return a 400 if not all info given', () => {
-      return request(app).post('/api/v1/foods').send(postBody).then(response => {
+      return request(app).post('/api/v1/foods').send({"calories": 100}).then(response => {
         expect(response.status).toBe(400)
       });
     });
