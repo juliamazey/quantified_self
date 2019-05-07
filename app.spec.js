@@ -10,10 +10,10 @@ describe('api', () => {
     shell.exec('npx sequelize db:seed:all');
   });
 
-  describe('Test /api/v1/foods path', () => {
+  describe('Test GET /api/v1/foods path', () => {
     test('should return a 200 status', () => {
       return request(app).get('/api/v1/foods').then(response => {
-        expect(response.status).toBe(200)
+        expect(response.status).toBe(200);
       });
     });
 
@@ -28,15 +28,15 @@ describe('api', () => {
     test('should return a 404 if there are no foods in DB', () => {
       shell.exec('npx sequelize db:seed:undo:all');
       return request(app).get('/api/v1/foods').then(response => {
-        expect(response.status).toBe(404)
+        expect(response.status).toBe(404);
       });
     });
   });
 
-  describe('Test /api/v1/foods/:id path', () => {
+  describe('Test GET /api/v1/foods/:id path', () => {
     test('should return a 200 status', () => {
       return request(app).get('/api/v1/foods/1').then(response => {
-        expect(response.status).toBe(200)
+        expect(response.status).toBe(200);
       });
     });
 
@@ -44,12 +44,26 @@ describe('api', () => {
       return request(app).get('/api/v1/foods/1').then(response => {
         expect(Object.keys(response.body)).toContain('name'),
         expect(Object.keys(response.body)).toContain('calories'),
-        expect((response.body.id)).toBe(1)
+        expect((response.body.id)).toBe(1);
       });
     });
 
     test('should return a 404 if the food does not exist in DB', () => {
       return request(app).get('/api/v1/foods/100').then(response => {
+        expect(response.status).toBe(404)
+      });
+    });
+  });
+
+  describe('Test DELETE /api/v1/foods/:id path', () => {
+    test('should return a 204 status', () => {
+      return request(app).delete('/api/v1/foods/1').then(response => {
+        expect(response.status).toBe(204);
+      });
+    });
+
+    test('should return a 404 if the food does not exist in DB', () => {
+      return request(app).delete('/api/v1/foods/100').then(response => {
         expect(response.status).toBe(404)
       });
     });

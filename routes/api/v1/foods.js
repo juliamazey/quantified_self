@@ -48,4 +48,27 @@ router.get("/:id", function(req, res) {
     });
 });
 
+// DELETE food by id
+router.delete("/:id", function(req, res) {
+  Food.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(food => {
+    if (food === 0) {
+      res.setHeader("Content-Type", "application/json");
+      res.status(404).send(JSON.stringify({ message: 'Food does not exist in database'}));
+    }
+    else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(204).send({ food });
+    }
+  })
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send({ error })
+  });
+});
+
 module.exports = router;
