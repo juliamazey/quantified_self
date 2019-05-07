@@ -1,13 +1,13 @@
 {
   "development": {
-    "username": "lewis",
+    "username": "juliamarcooteros",
     "password": null,
     "database": "quantified_self_development",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "lewis",
+    "username": "juliamarcooteros",
     "password": null,
     "database": "quantified_self_test",
     "host": "127.0.0.1",
