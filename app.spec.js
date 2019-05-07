@@ -78,9 +78,14 @@ describe('api', () => {
         expect(response.status).toBe(201)
       });
     });
+
     test('should return a 400 if not all info given', () => {
       return request(app).post('/api/v1/foods').send({"calories": 100}).then(response => {
         expect(response.status).toBe(400)
+      });
+    });
+  });
+
   describe('Test PATCH /api/v1/foods/:id path', () => {
     test('should return a 200 status', () => {
       return request(app).patch('/api/v1/foods/1').send(patchBody).then(response => {
