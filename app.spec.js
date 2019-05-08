@@ -21,7 +21,7 @@ describe('api', () => {
 
     test('should return an array of foods', () => {
       return request(app).get('/api/v1/foods').then(response => {
-        expect(response.body.length).toBe(0),
+        expect(response.body.length).toBe(6),
         expect(Object.keys(response.body[0])).toContain('name'),
         expect(Object.keys(response.body[0])).toContain('calories')
       });
@@ -129,9 +129,9 @@ describe('api', () => {
 
     test('should return an array of meals', () => {
       return request(app).get('/api/v1/meals').then(response => {
-        expect(response.body.length).toBe(6),
+        expect(response.body.length).toBe(3),
         expect(Object.keys(response.body[0])).toContain('name'),
-        expect(Object.keys(response.body[0])).toContain('calories')
+        expect(Object.keys(response.body[0])).toContain('id')
       });
     });
 

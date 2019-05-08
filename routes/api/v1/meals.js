@@ -7,10 +7,9 @@ pry = require('pryjs')
 
 // GET all meals
 router.get("/", function(req, res) {
-  // eval(pry.it)
   Meal.findAll({
-    attributes: ['id', 'name']
-    // include: { Food }
+    attributes: ['id', 'name'],
+    include: { model: Food, attributes: ['id', 'name', 'calories'], through: {attributes: []}}
   })
     .then(meals => {
       if (meals.length > 0) {
