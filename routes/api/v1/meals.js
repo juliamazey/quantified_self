@@ -8,33 +8,15 @@ pry = require('pryjs')
 router.get("/:id", function(req, res) {
   Meal.findOne({
     where: {
-      id: req.params.id
-    }
+      id: req.params.id,
+    },
+    include: { model: Food, attributes: ['id', 'name', 'calories'], through: { attributes: [] } },
+    attributes: ['id', 'name']
   })
   .then(meal => {
     if (meal != null) {
-      meal.getFood()
-      .then(foods => {
-        var mealFacade = {
-          id: meal.id,
-          name: meal.name,
-          foods: []
-        }
-        foods.forEach(function(element) {
-        var foodFacade = {
-            id: element.id,
-            name: element.name,
-            calories: element.calories
-          }
-          mealFacade.foods.push(foodFacade)
-        })
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).send(mealFacade);
-      })
-      .catch(error => {
-        res.setHeader("Content-Type", "application/json");
-        res.status(400).send({ error })
-      })
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).send(meal);
     }
     else {
       res.setHeader("Content-Type", "application/json");
