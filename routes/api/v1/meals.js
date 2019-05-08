@@ -2,20 +2,22 @@ var express = require("express");
 var router = express.Router();
 var Food = require('../../../models').Food;
 var Meal = require('../../../models').Meal;
+var MealFacade = require('../../../facades/meal_facade');
 pry = require('pryjs')
 
 // GET meal by id
 router.get("/:id", function(req, res) {
-  Food.findOne({
+  Meal.findOne({
     where: {
       id: req.params.id
-    },
-    attributes: ['id', 'name', 'calories']
+    }
   })
-  .then(food => {
-    if (food != null) {
-      res.setHeader("Content-Type", "application/json");
-      res.status(200).send(JSON.stringify(food));
+  .then(meal => {
+    if (meal != null) {
+      var mealFacade = new MealFacade(meal)
+      mealFacade.listFoods()
+      // res.setHeader("Content-Type", "application/json");
+      // res.status(200).send(meal);
     }
     else {
       res.setHeader("Content-Type", "application/json");
