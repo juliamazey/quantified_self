@@ -175,4 +175,30 @@ describe('api', () => {
       });
     });
   });
+
+  describe('Test POST api/v1/meals/:meal_id/foods/:id path', () => {
+    test('should return a 201 status', () => {
+      return request(app).post('/api/v1/meals/1/foods/1').then(response => {
+        expect(response.status).toBe(201);
+      });
+    });
+
+    test('should return a confirmation message', () => {
+      return request(app).post('/api/v1/meals/1/foods/1').then(response => {
+        expect(response.body.message).toBe('Successfully added Banana to Fruit Salad');
+      });
+    });
+
+    test('should return a 404 if the meal cannot be found', () => {
+      return request(app).post('/api/v1/meals/999/foods/1').then(response => {
+        expect(response.status).toBe(404);
+      });
+    });
+
+    test('should return a 404 if the food cannot be found', () => {
+      return request(app).post('/api/v1/meals/1/foods/999').then(response => {
+        expect(response.status).toBe(404);
+      });
+    });
+  });
 });
