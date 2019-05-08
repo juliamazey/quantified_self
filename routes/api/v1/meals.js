@@ -21,7 +21,7 @@ router.get("/:id", function(req, res) {
           foods: []
         }
         foods.forEach(function(element) {
-          foodFacade = {
+        var foodFacade = {
             id: element.id,
             name: element.name,
             calories: element.calories
