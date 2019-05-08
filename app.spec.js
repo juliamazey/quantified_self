@@ -44,15 +44,15 @@ describe('api', () => {
 
     test('should return a food object by id', () => {
       return request(app).get('/api/v1/foods/1').then(response => {
-        expect(Object.keys(response.body)).toContain('name'),
-        expect(Object.keys(response.body)).toContain('calories'),
-        expect((response.body.id)).toBe(1);
+        expect((response.body.id)).toBe(1),
+        expect(response.body.name).toBe('Banana'),
+        expect(response.body.calories).toBe(150);
       });
     });
 
     test('should return a 404 if the food does not exist in DB', () => {
-      return request(app).get('/api/v1/foods/100').then(response => {
-        expect(response.status).toBe(404)
+      return request(app).get('/api/v1/foods/999').then(response => {
+        expect(response.status).toBe(404);
       });
     });
   });
@@ -65,7 +65,7 @@ describe('api', () => {
     });
 
     test('should return a 404 if the food does not exist in the DB', () => {
-      return request(app).delete('/api/v1/foods/100').then(response => {
+      return request(app).delete('/api/v1/foods/999').then(response => {
         expect(response.status).toBe(404)
       });
     });
@@ -76,6 +76,15 @@ describe('api', () => {
       shell.exec('npx sequelize db:seed:undo:all');
       return request(app).post('/api/v1/foods').send(postBody).then(response => {
         expect(response.status).toBe(201)
+      });
+    });
+
+    test('should return the created food', () => {
+      shell.exec('npx sequelize db:seed:undo:all');
+      return request(app).post('/api/v1/foods').send(postBody).then(response => {
+        expect(response.body.name).toBe('Banana'),
+        expect(response.body.calories).toBe(100),
+        expect((response.body.id)).toBe(1);
       });
     });
 
@@ -95,27 +104,51 @@ describe('api', () => {
 
     test('should return the updated food', () => {
       return request(app).patch('/api/v1/foods/1').send(patchBody).then(response => {
+        expect((response.body.id)).toBe(1),
         expect(response.body.name).toBe('updated_name'),
-        expect(response.body.calories).toBe(100),
-        expect((response.body.id)).toBe(1);
+        expect(response.body.calories).toBe(100);
       });
     });
 
     test('should return a 404 if the food does not exist in the DB', () => {
-      return request(app).patch('/api/v1/foods/100').send(patchBody).then(response => {
+      return request(app).patch('/api/v1/foods/999').send(patchBody).then(response => {
         expect(response.status).toBe(404);
       });
     });
 
     test('should return a 400 if the request is missing calories parameter', () => {
-      return request(app).patch('/api/v1/foods/100').send({"name": "updated_name"}).then(response => {
+      return request(app).patch('/api/v1/foods/999').send({"name": "updated_name"}).then(response => {
         expect(response.status).toBe(400);
       });
     });
 
     test('should return a 400 if the request is missing name parameter', () => {
-      return request(app).patch('/api/v1/foods/100').send({"calories": 100}).then(response => {
+      return request(app).patch('/api/v1/foods/999').send({"calories": 100}).then(response => {
         expect(response.status).toBe(400);
+      });
+    });
+  });
+
+  describe('Test GET /api/v1/meals/:id path', () => {
+    test('should return a 200 status', () => {
+      return request(app).get('/api/v1/meals/1').then(response => {
+        expect(response.status).toBe(200);
+      });
+    });
+
+    test('should return a meal and associated foods', () => {
+      return request(app).get('/api/v1/meals/1').then(response => {
+        expect(response.body.id).toBe(1),
+        expect(response.body.name).toBe('Fruit Salad'),
+        expect(Object.keys(response.body.Food[0])).toContain('id')
+        expect(Object.keys(response.body.Food[0])).toContain('name')
+        expect(Object.keys(response.body.Food[0])).toContain('calories')
+      });
+    });
+
+    test('should return a 404 status if the meal does not exist in the DB', () => {
+      return request(app).get('/api/v1/meals/999').then(response => {
+        expect(response.status).toBe(404);
       });
     });
   });
