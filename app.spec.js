@@ -21,7 +21,7 @@ describe('api', () => {
 
     test('should return an array of foods', () => {
       return request(app).get('/api/v1/foods').then(response => {
-        expect(response.body.length).toBe(6),
+        expect(response.body.length).toBe(0),
         expect(Object.keys(response.body[0])).toContain('name'),
         expect(Object.keys(response.body[0])).toContain('calories')
       });
@@ -116,6 +116,29 @@ describe('api', () => {
     test('should return a 400 if the request is missing name parameter', () => {
       return request(app).patch('/api/v1/foods/100').send({"calories": 100}).then(response => {
         expect(response.status).toBe(400);
+      });
+    });
+  });
+
+  describe('Test GET /api/v1/meals path', () => {
+    test('should return a 200 status', () => {
+      return request(app).get('/api/v1/meals').then(response => {
+        expect(response.status).toBe(200);
+      });
+    });
+
+    test('should return an array of meals', () => {
+      return request(app).get('/api/v1/meals').then(response => {
+        expect(response.body.length).toBe(6),
+        expect(Object.keys(response.body[0])).toContain('name'),
+        expect(Object.keys(response.body[0])).toContain('calories')
+      });
+    });
+
+    test('should return a 404 if there are no meals in DB', () => {
+      shell.exec('npx sequelize db:seed:undo:all');
+      return request(app).get('/api/v1/meals').then(response => {
+        expect(response.status).toBe(404);
       });
     });
   });
