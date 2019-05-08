@@ -1,9 +1,8 @@
 var shell = require('shelljs');
 var request = require('supertest');
 var app = require('./app');
-const foodPostBody = { "name": "Banana", "calories": 100 }
-const foodPatchBody = { "name": "updated_name", "calories": 100 }
-const mealPatchBody = { "name": "updated_name", "calories": 100 }
+const postBody = { "name": "Banana", "calories": 100 }
+const patchBody = { "name": "updated_name", "calories": 100 }
 
 describe('api', () => {
   beforeEach(() => {
@@ -75,14 +74,14 @@ describe('api', () => {
   describe('Test POST /api/v1/foods/ path', () => {
     test('should return a 201 status', () => {
       shell.exec('npx sequelize db:seed:undo:all');
-      return request(app).post('/api/v1/foods').send(foodPostBody).then(response => {
+      return request(app).post('/api/v1/foods').send(postBody).then(response => {
         expect(response.status).toBe(201)
       });
     });
 
     test('should return the created food', () => {
       shell.exec('npx sequelize db:seed:undo:all');
-      return request(app).post('/api/v1/foods').send(foodPostBody).then(response => {
+      return request(app).post('/api/v1/foods').send(postBody).then(response => {
         expect(response.body.name).toBe('Banana'),
         expect(response.body.calories).toBe(100),
         expect((response.body.id)).toBe(1);
@@ -98,13 +97,13 @@ describe('api', () => {
 
   describe('Test PATCH /api/v1/foods/:id path', () => {
     test('should return a 200 status', () => {
-      return request(app).patch('/api/v1/foods/1').send(foodPatchBody).then(response => {
+      return request(app).patch('/api/v1/foods/1').send(patchBody).then(response => {
         expect(response.status).toBe(200);
       });
     });
 
     test('should return the updated food', () => {
-      return request(app).patch('/api/v1/foods/1').send(foodPatchBody).then(response => {
+      return request(app).patch('/api/v1/foods/1').send(patchBody).then(response => {
         expect((response.body.id)).toBe(1),
         expect(response.body.name).toBe('updated_name'),
         expect(response.body.calories).toBe(100);
@@ -112,7 +111,7 @@ describe('api', () => {
     });
 
     test('should return a 404 if the food does not exist in the DB', () => {
-      return request(app).patch('/api/v1/foods/999').send(foodPatchBody).then(response => {
+      return request(app).patch('/api/v1/foods/999').send(patchBody).then(response => {
         expect(response.status).toBe(404);
       });
     });
