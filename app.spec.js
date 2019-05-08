@@ -129,7 +129,30 @@ describe('api', () => {
     });
   });
 
-  describe('Test GET /api/v1/meals/:id path', () => {
+  describe('Test GET /api/v1/meals path', () => {
+    test('should return a 200 status', () => {
+      return request(app).get('/api/v1/meals').then(response => {
+        expect(response.status).toBe(200);
+      });
+    });
+
+    test('should return an array of meals', () => {
+      return request(app).get('/api/v1/meals').then(response => {
+        expect(response.body.length).toBe(3),
+        expect(Object.keys(response.body[0])).toContain('name'),
+        expect(Object.keys(response.body[0])).toContain('id')
+      });
+    });
+
+    test('should return a 404 if there are no meals in DB', () => {
+      shell.exec('npx sequelize db:seed:undo:all');
+      return request(app).get('/api/v1/meals').then(response => {
+        expect(response.status).toBe(404);
+      });
+    });
+  });
+  
+    describe('Test GET /api/v1/meals/:id path', () => {
     test('should return a 200 status', () => {
       return request(app).get('/api/v1/meals/1').then(response => {
         expect(response.status).toBe(200);
