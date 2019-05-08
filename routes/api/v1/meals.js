@@ -25,6 +25,7 @@ router.get("/", function(req, res) {
       res.setHeader("Content-Type", "application/json");
       res.status(400).send({ error })
     });
+});
 
 
 // GET meal by id
