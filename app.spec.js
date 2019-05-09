@@ -151,7 +151,7 @@ describe('api', () => {
       });
     });
   });
-  
+
     describe('Test GET /api/v1/meals/:id path', () => {
     test('should return a 200 status', () => {
       return request(app).get('/api/v1/meals/1').then(response => {
@@ -198,6 +198,20 @@ describe('api', () => {
     test('should return a 404 if the food cannot be found', () => {
       return request(app).post('/api/v1/meals/1/foods/999').then(response => {
         expect(response.status).toBe(404);
+      });
+    });
+  });
+
+  describe('Test DELETE /api/v1/:meal_id/foods/:id path', () => {
+    test('should return a 204 status', () => {
+      return request(app).delete('/api/v1/1/foods/1').then(response => {
+        expect(response.status).toBe(204);
+      });
+    });
+
+    test('should return a 404 if the food does not exist in the DB', () => {
+      return request(app).delete('/api/v1/1/foods/999').then(response => {
+        expect(response.status).toBe(404)
       });
     });
   });
