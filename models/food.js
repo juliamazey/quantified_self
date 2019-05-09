@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     calories: DataTypes.INTEGER
   }, {});
   Food.associate = function(models) {
-    Food.hasMany(models.MealFood)
+    Food.hasMany(models.MealFood, { onDelete: 'cascade' });
     Food.belongsToMany(models.Meal, {through: models.MealFood})
   };
   return Food;
