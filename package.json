@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "jest --forceExit"
+    "test": "npx nyc jest --forceExit"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -14,13 +14,14 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "pg": "^7.10.0",
-    "pryjs": "^1.0.3",
     "sequelize": "^5.8.5",
     "sequelize-cli": "^5.4.0"
   },
   "devDependencies": {
     "babel-jest": "^24.7.1",
     "jest": "^24.8.0",
+    "nyc": "^14.1.1",
+    "pryjs": "^1.0.3",
     "shelljs": "^0.8.3",
     "supertest": "^4.0.2"
   }
