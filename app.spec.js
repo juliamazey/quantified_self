@@ -84,7 +84,7 @@ describe('api', () => {
       return request(app).post('/api/v1/foods').send(postBody).then(response => {
         expect(response.body.name).toBe('Banana'),
         expect(response.body.calories).toBe(100),
-        expect((response.body.id)).toBe(1);
+        expect((response.body.id)).toBe(7);
       });
     });
 
