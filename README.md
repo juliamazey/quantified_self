@@ -414,7 +414,12 @@ If you would like to contribute to this project, you can do the following:
 
 ## Schema Visualizations
 
+## Quantified Self Schema
+
 ![Quantified Self Schema Visualization](/quantified_self_db.png?raw=true)
+
+## Recipes API Schema
+
 ![Recipes API Schema Visualization](/recipes_api_db.png?raw=true)
 
 ## Tech Stack
