@@ -3,7 +3,6 @@ var router = express.Router();
 var Food = require('../../../models').Food;
 var Meal = require('../../../models').Meal;
 var MealFood = require('../../../models').MealFood;
-pry = require('pryjs')
 
 // GET all meals
 router.get("/", function(req, res) {

@@ -3,8 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-pry = require('pryjs')
-
 
 var indexRouter = require('./routes/index');
 var foodsRouter = require('./routes/api/v1/foods');

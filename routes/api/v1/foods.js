@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var Food = require('../../../models').Food;
-pry = require('pryjs')
 
 // GET all foods
 router.get("/", function(req, res) {
