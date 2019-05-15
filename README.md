@@ -43,7 +43,7 @@ These endpoints are from the quantified self microservice and are used to access
 
 ### Get Foods
 
-Visitors can retrieve all foods in the database by making a request to the following endpoint:
+Users can retrieve all foods in the database by making a request to the following endpoint:
 
     GET /api/v1/foods
 
@@ -58,7 +58,7 @@ If the request is successful, foods will be returned in the following format:
 
 ### Get Food by id
 
-Visitors can retrieve a food by id by making a request to the following endpoint:
+Users can retrieve a food by id by making a request to the following endpoint:
 
     GET /api/v1/foods/:id
     
@@ -72,14 +72,13 @@ If the request is successful, the food with id = :id will be returned in the fol
 }
 ```
 
-### Create food
+### Create Food
 
-
-Visitors can create a new food by making a request to the following endpoint:
+Users can create a new food by making a request to the following endpoint:
 
     POST /api/v1/foods/
     
-With a body that has the following format
+With a body that has the following format:
 ```
 {
     "name": food_name,
@@ -98,3 +97,109 @@ If the request is successful, the new food will be created and returned in the f
 }
 ```
 
+### Edit Food
+
+Users can create a new food by making a request to the following endpoint:
+
+    PATCH /api/v1/foods/:id
+    
+With a body that has the following format
+```
+{
+    "name": edited_name,
+    "calories": 200
+}
+```
+
+If the request is successful, the food with id = :id will be edited and returned in the following format:
+```
+{
+    "id": 10,
+    "name": "edited_name",
+    "calories": 2==,
+    "updatedAt": current_time,
+    "createdAt": created_time
+}
+```
+
+### Delete Food
+
+Users can create a new food by making a request to the following endpoint:
+
+    DELETE /api/v1/foods/:id
+
+If the request is successful, the food with id = :id will be deleted and a 204 status will be returned.
+
+### Get Meals
+
+Users can retrieve all meals in the database and their associated foods by making a request to the following endpoint:
+
+    GET /api/v1/meals
+
+If the request is successful, foods will be returned in the following format:
+```
+[
+    {
+        "id": 1,
+        "name": "Fruit Salad",
+        "Food": [
+            {
+                "id": 3,
+                "name": "Kiwi",
+                "calories": 50
+            },
+            {
+                "id": 2,
+                "name": "Apple",
+                "calories": 70
+            }
+        ]
+    },
+```
+
+### Get Foods for a Meal
+
+Users can retrieve all foods for a meal by making a request to the following endpoint:
+
+    GET /api/v1/meals/:meal_id/foods
+
+If the request is successful, the meal with id = :meal_id and all associated foods will be returned in the following format:
+```
+{
+    "id": 1,
+    "name": "Fruit Salad",
+    "Food": [
+        {
+            "id": 2,
+            "name": "Apple",
+            "calories": 70
+        },
+        {
+            "id": 3,
+            "name": "Kiwi",
+            "calories": 50
+        }
+    ]
+}
+```
+
+### Add a Food to a Meal
+
+Users can add a food to a meal by making a request to the following endpoint:
+
+    POST /api/v1/meals/:meal_id/foods/:id
+
+If the request is successful, the food with id = :id will be added to the meal with id = :meal_id and a confirmation message will be returned with the following format:
+```
+{
+    "message": "Successfully added FOOD to MEAL"
+}
+```
+
+### Remove a Food from a Meal
+
+Users can remove a food from a meal by making a request to the following endpoint:
+
+    DELETE /api/v1/meals/:meal_id/foods/:id
+    
+If the request is successful, the food with id = :id will be removed from the meal with id = :meal_id and a 204 status will be returned.
