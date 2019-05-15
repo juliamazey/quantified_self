@@ -423,9 +423,9 @@ If you would like to contribute to this project, you can do the following:
 ![Recipes API Schema Visualization](/recipes_api_db.png?raw=true)
 
 ## Tech Stack
-- Node.js
-- Express
-- Sequelize
-- React
-- Edamam API
+- [Node.js](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [Sequelize](http://docs.sequelizejs.com/)
+- [React](https://reactjs.org/)
+- [Edamam Recipe API](https://developer.edamam.com/edamam-recipe-api)
 
