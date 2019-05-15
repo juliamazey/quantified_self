@@ -31,7 +31,7 @@ Finally, you can start each of the three apps locally
 
     npm start
 
-and visit the frontend homepage by navigating to http://localhost:4000/
+and visit the frontend homepage by navigating to http://localhost:3000/
 
 ## API Endpoints
 
