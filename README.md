@@ -395,3 +395,32 @@ If the request is successful, the user's saved recipes will be returned in the r
     }
 ]
 ```
+## Hosted Microservices
+- Quantified Self - hosted at: https://still-earth-89329.herokuapp.com
+- Recipes API - hosted at: https://blooming-oasis-66564.herokuapp.com
+
+## How to Contribute
+If you would like to contribute to this project, you can do the following:
+
+  1. Fork this repo on GitHub
+  2. Clone the project to your own machine
+  3. Commit changes to your own branch
+  4. Push your work back up to your fork
+  5. Submit a pull request to the original repo describing your changes
+
+## Contributors
+- [Chris Lewis](https://github.com/csvlewis)
+- [Julia Marco](https://github.com/juliamarco)
+
+## Schema Visualizations
+
+![Quantified Self Schema Visualization](/quantified_self_db.png?raw=true)
+![Recipes API Schema Visualization](/recipes_api_db.png?raw=true)
+
+## Tech Stack
+- Node.js
+- Express
+- Sequelize
+- React
+- Edamam API
+
